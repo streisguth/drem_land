@@ -51,17 +51,26 @@ body::after {
 
 .profile-heading h1 { grid-row: 2; }
 
-.terrarium-control {
+.terrarium-stage {
   grid-row: 1;
   place-self: center;
-  inline-size: min(100%, clamp(14rem, 36vw, 34rem));
+  inline-size: min(100%, clamp(15rem, 35vw, 27rem));
+}
+
+.terrarium-control {
+  display: block;
+  width: 100%;
   margin: 0;
   padding: 0;
   border: 0;
+  -webkit-appearance: none;
+  appearance: none;
   background: none;
   color: inherit;
   cursor: pointer;
 }
+
+.terrarium-stage [hidden] { display: none; }
 
 .terrarium-control:focus-visible {
   outline: 1px solid var(--lime);
@@ -138,7 +147,7 @@ h1 {
 @media (max-width: 760px) {
   .profile { grid-template-columns: 1fr; }
   .profile-heading { min-height: 56svh; border-bottom: 1px solid var(--line); }
-  .terrarium-control { inline-size: min(100%, clamp(15rem, 58vw, 21rem)); }
+  .terrarium-stage { inline-size: min(100%, clamp(15rem, 74vw, 20.5rem)); }
   h1 { font-size: clamp(3rem, 17.25vw, 8rem); }
   .profile-info { min-height: 56svh; border-left: 0; }
   .bio { font-size: clamp(1.65rem, 7vw, 2.5rem); }

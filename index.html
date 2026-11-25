@@ -8,30 +8,46 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&amp;display=swap" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=garden" />
     <title>drem.land</title>
-    <script src="./terrarium-scene.js" defer></script>
-    <script src="./terrarium.js" defer></script>
+    <script src="./terrarium-frame.js?v=garden" defer></script>
+    <script src="./terrarium-ground.js?v=pond" defer></script>
+    <script src="./terrarium-waterfall.js" defer></script>
+    <script src="./terrarium-foliage.js?v=garden" defer></script>
+    <script src="./terrarium-undergrowth.js?v=garden" defer></script>
+    <script src="./terrarium-insects.js" defer></script>
+    <script src="./terrarium-wireframe.js?v=pond" defer></script>
   </head>
   <body>
     <main class="profile">
       <header class="profile-heading">
         <h1>drem.land</h1>
-        <button
-          type="button"
-          class="terrarium-control"
-          id="terrarium-control"
-          aria-label="Play terrarium rotation"
-        >
-          <canvas
+        <div class="terrarium-stage">
+          <img
             class="terrarium"
-            id="terrarium"
-            width="192"
-            height="160"
-            role="img"
-            aria-label="Rotating lime-green pixel-art terrarium"
-          >Lime-green pixel-art terrarium</canvas>
-        </button>
+            id="terrarium-poster"
+            src="./terrarium-wireframe.png?v=pond"
+            width="288"
+            height="320"
+            alt="Rounded glass terrarium with a moss-green bonsai and a kidney-shaped lily pond fed by a little waterfall"
+          />
+          <button
+            type="button"
+            class="terrarium-control"
+            id="terrarium-control"
+            aria-label="Play terrarium animation"
+            hidden
+          >
+            <canvas
+              class="terrarium"
+              id="terrarium"
+              width="288"
+              height="320"
+              role="img"
+              aria-label="Rounded glass terrarium with a moss-green bonsai, a little waterfall, a kidney-shaped lily pond, and tiny flying insects"
+            >Tall lime-green wireframe terrarium</canvas>
+          </button>
+        </div>
       </header>
 
       <div class="profile-info">
