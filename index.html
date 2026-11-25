@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="drem.land is a San Francisco-based dj and artist exploring audio biomes over adherence to strict genre-oriented sets." />
+    <meta name="theme-color" content="#050505" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&amp;display=swap" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>drem.land</title>
+    <script src="./terrarium-scene.js" defer></script>
+    <script src="./terrarium.js" defer></script>
+  </head>
+  <body>
+    <main class="profile">
+      <header class="profile-heading">
+        <h1>drem.land</h1>
+        <button
+          type="button"
+          class="terrarium-control"
+          id="terrarium-control"
+          aria-label="Play terrarium rotation"
+        >
+          <canvas
+            class="terrarium"
+            id="terrarium"
+            width="192"
+            height="160"
+            role="img"
+            aria-label="Rotating lime-green pixel-art terrarium"
+          >Lime-green pixel-art terrarium</canvas>
+        </button>
+      </header>
+
+      <div class="profile-info">
+        <section aria-labelledby="about-title">
+          <h2 class="about-title" id="about-title">About</h2>
+          <p class="bio">drem.land is a San Francisco-based dj and artist exploring audio biomes over adherence to strict genre-oriented sets.</p>
+        </section>
+
+        <div class="links">
+          <nav aria-label="Profile links">
+            <a href="https://www.instagram.com/drem.land___">
+              <span>Instagram</span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://www.mixcloud.com/drem_land/">
+              <span>Mixcloud</span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="./drem-land-press-kit.txt" download>
+              <span>Download Press Kit</span><span aria-hidden="true">↓</span>
+            </a>
+          </nav>
+          <p class="booking-email"><span>BOOKING: lorem@ipsum.com</span></p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
