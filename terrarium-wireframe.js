@@ -178,6 +178,9 @@
   let seconds = 0;
   let lastFrame = null;
   let request = null;
+  let manualFrame = null;
+  let drag = null;
+  let suppressPointerClick = false;
 
   function animate(time) {
     if (lastFrame === null) lastFrame = time;
@@ -194,18 +197,93 @@
 
   function setPlaying(playing) {
     if (request !== null) cancelAnimationFrame(request);
+    clearDrag();
     lastFrame = null;
     request = playing ? requestAnimationFrame(animate) : null;
     const label = playing ? "Pause terrarium animation" : "Play terrarium animation";
     control.setAttribute("aria-label", label);
-    control.title = label;
+    control.setAttribute("data-rotation-state", playing ? "running" : "paused");
+    control.title = playing ? label : "Drag or use the arrow keys to rotate. Click to play.";
+  }
+
+  function rotatePaused(nextAngle) {
+    angle = ((nextAngle % fullTurn) + fullTurn) % fullTurn;
+    if (manualFrame !== null) return;
+
+    manualFrame = requestAnimationFrame(() => {
+      manualFrame = null;
+      if (request === null) draw(angle, seconds);
+    });
+  }
+
+  function beginDrag(event) {
+    if (!event.isPrimary || event.button !== 0) return;
+    suppressPointerClick = false;
+    if (request !== null) return;
+
+    drag = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      angle,
+      turnDistance: Math.max(240, control.clientWidth * 1.5),
+      moved: false,
+    };
+    control.setPointerCapture(event.pointerId);
+  }
+
+  function moveDrag(event) {
+    if (drag === null || event.pointerId !== drag.pointerId) return;
+    const horizontal = event.clientX - drag.x;
+    const vertical = event.clientY - drag.y;
+
+    if (!drag.moved) {
+      if (Math.abs(horizontal) < 5 || Math.abs(horizontal) <= Math.abs(vertical)) return;
+      drag.moved = true;
+      control.setAttribute("data-rotation-state", "dragging");
+    }
+
+    rotatePaused(drag.angle - horizontal * fullTurn / drag.turnDistance);
+  }
+
+  function clearDrag() {
+    if (drag === null) return;
+    suppressPointerClick = drag.moved;
+    drag = null;
+  }
+
+  function endDrag(event) {
+    if (drag === null || event.pointerId !== drag.pointerId) return;
+    clearDrag();
+    control.setAttribute("data-rotation-state", "paused");
   }
 
   draw(angle, seconds);
   poster.hidden = true;
   control.hidden = false;
   setPlaying(!motion.matches);
-  control.addEventListener("click", () => setPlaying(request === null));
+  control.addEventListener("pointerdown", beginDrag);
+  control.addEventListener("pointermove", moveDrag);
+  control.addEventListener("pointerup", (event) => {
+    moveDrag(event);
+    endDrag(event);
+  });
+  control.addEventListener("pointercancel", endDrag);
+  control.addEventListener("lostpointercapture", endDrag);
+  control.addEventListener("click", (event) => {
+    // Releasing a dragged button can also fire a click. Keep the dragged view paused.
+    if (suppressPointerClick && (event.detail > 0 || event.pointerType)) {
+      suppressPointerClick = false;
+      return;
+    }
+    setPlaying(request === null);
+  });
+  control.addEventListener("keydown", (event) => {
+    if (request !== null || (event.key !== "ArrowLeft" && event.key !== "ArrowRight")) return;
+    event.preventDefault();
+    const step = event.key === "ArrowLeft" ? Math.PI / 18 : -Math.PI / 18;
+    rotatePaused(angle + step);
+  });
 
   const onMotionChange = (event) => setPlaying(!event.matches);
   if (typeof motion.addEventListener === "function") {

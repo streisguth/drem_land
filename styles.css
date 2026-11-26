@@ -72,6 +72,17 @@ body::after {
 
 .terrarium-stage [hidden] { display: none; }
 
+.terrarium-control[data-rotation-state="paused"],
+.terrarium-control[data-rotation-state="dragging"] {
+  cursor: grab;
+  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.terrarium-control[data-rotation-state="dragging"] { cursor: grabbing; }
+
 .terrarium-control:focus-visible {
   outline: 1px solid var(--lime);
   outline-offset: 0.25rem;
