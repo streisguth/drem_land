@@ -164,5 +164,5 @@ h1 {
   h1 { font-size: clamp(3rem, 17.25vw, 8rem); }
   .profile-info { min-height: 56svh; border-left: 0; }
   .bio { font-size: clamp(1.65rem, 7vw, 2.5rem); }
-  .links { margin-top: 5rem; }
+  .links { margin-top: 3rem; }
 }
